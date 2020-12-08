@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp"
+    android:padding="4dp"
+    android:layout_margin="4dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cont_img"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_below="@+id/txt_entry_title"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="4dp">
+                <com.appwork.utils.CircleImageView
+                    android:id="@+id/img_entry"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_user"
+                    android:transitionName="zoom_transition"/>
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/txt_entry_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_entry_time"
+                android:layout_marginTop="4dp"
+                android:padding="4dp"
+                android:text="@string/title"
+                android:textColor="@color/colorPrimaryText" />
+
+            <TextView
+                android:id="@+id/txt_entry_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:padding="4dp"
+                android:textColor="@color/colorPrimaryText"
+                android:text="@string/dd_mm_yyyy" />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/cont_get"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorBGGet">
+            <TextView
+                android:id="@+id/txt_get"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textColor="@color/colorGet"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cont_given"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorBGGive"
+            >
+            <TextView
+                android:id="@+id/txt_given_money"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:textColor="@color/colorGive"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
