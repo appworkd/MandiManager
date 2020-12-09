@@ -24,9 +24,9 @@
             android:parentActivityName=".OrderListActivity"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".AddClientActivity"
+            android:name="com.appwork.ui.addclient.AddClientActivity"
             android:label="Add User"
-            android:parentActivityName=".UserListActivity"
+            android:parentActivityName="com.appwork.ui.client.ClientListActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".OrderListActivity"
@@ -41,13 +41,13 @@
         <activity
             android:name=".CalculateActivity"
             android:label="Entry"
-            android:parentActivityName=".UserListActivity"
+            android:parentActivityName="com.appwork.ui.client.ClientListActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".AddCommodityActivity" />
         <activity
             android:name=".EntriesActivity"
             android:label="@string/entries"
-            android:parentActivityName=".UserListActivity"
+            android:parentActivityName="com.appwork.ui.client.ClientListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:label="Profile"
@@ -59,7 +59,7 @@
             android:label="Transaction"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UserListActivity"
+            android:name="com.appwork.ui.client.ClientListActivity"
             android:label="Users"
             android:theme="@style/AppTheme" />
         <activity android:name=".MainActivity" />

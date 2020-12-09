@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.appwork.adapter.UserListAdapter.UserVH
 import com.appwork.mandisamiti.R
-import com.appwork.model.ClientModel
+import com.appwork.data.entities.ClientModel
 import com.appwork.utils.CircleImageView
 import com.bumptech.glide.Glide
 import java.util.*
@@ -80,7 +80,7 @@ class UserListAdapter(private val context: Context, private val selectUserListen
             val userName = currentUser?.clientName
             val userDesc = currentUser?.clientAddress
             val uri = currentUser?.clientImg
-            val amount = currentUser?.clientAmount?.toInt()
+           /* val amount = currentUser?.clientAmount?.toInt()
             if (!userName!!.isEmpty()) {
                 txtName.text = userName
             }
@@ -112,7 +112,7 @@ class UserListAdapter(private val context: Context, private val selectUserListen
                     txtStatus.text = resources.getString(R.string.txt_give)
                     txtAmount.setTextColor(resources.getColor(R.color.colorGive))
                 }
-            }
+            }*/
         }
 
         init {

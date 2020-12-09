@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="userListVM"
+            type="com.appwork.ui.client.ClientListVM" />
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawer_main">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/tl_users"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    app:title="Users"
+                    app:titleTextColor="@android:color/white"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <include layout="@layout/container_user_list" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_add_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
+                app:icon="@drawable/ic_add"
+                android:onClick="@{userListVM::addUserList}"
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="16dp"
+                android:text="@string/add_user"
+                android:layout_marginEnd="16dp"
+                android:tint="@android:color/white" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:menu="@menu/nav_menu_main"
+            android:fitsSystemWindows="true"
+            android:id="@+id/nav_main"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header_layout"
+            />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

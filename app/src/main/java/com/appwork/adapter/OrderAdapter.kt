@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.appwork.adapter.OrderAdapter.OrderVH
 import com.appwork.mandisamiti.R
-import com.appwork.model.EntryModel
+import com.appwork.data.entities.EntryModel
 import com.appwork.utils.DateUtils
 import java.util.*
 

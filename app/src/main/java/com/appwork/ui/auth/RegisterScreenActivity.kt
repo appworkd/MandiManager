@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.appwork.data.entities.UserModel
 import com.appwork.mandisamiti.R
-import com.appwork.mandisamiti.UserListActivity
+import com.appwork.ui.client.ClientListActivity
 import com.appwork.mandisamiti.databinding.ActivityRegisterScreenBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
@@ -32,7 +32,7 @@ class RegisterScreenActivity : AppCompatActivity(), IValidationManager, KodeinAw
 
     override fun onSuccess(user: UserModel) {
 
-        val intent = Intent(this, UserListActivity::class.java)
+        val intent = Intent(this, ClientListActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.appwork.database.MandiManagement
 import com.appwork.ui.auth.RegisterScreenActivity
+import com.appwork.ui.client.ClientListActivity
 import com.appwork.utils.AppPreferences
 import com.appwork.utils.UiUtils
 import com.appwork.utils.ValidationUtils
@@ -73,7 +74,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             preferences.userName = userModel.userName
                             preferences.userEmail = userModel.userEmail
                             preferences.userContactNumber = userModel.contactNumber
-                            val intent = Intent(this, UserListActivity::class.java)
+                            val intent = Intent(this, ClientListActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {

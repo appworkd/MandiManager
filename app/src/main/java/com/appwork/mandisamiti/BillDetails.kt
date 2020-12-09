@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.appwork.database.MandiManagement
 import com.appwork.databaseUtils.EntryContract.EntryColumns
-import com.appwork.model.ClientModel
-import com.appwork.model.EntryModel
+import com.appwork.data.entities.ClientModel
+import com.appwork.data.entities.EntryModel
 import com.appwork.utils.DateUtils
 import com.appwork.utils.StringValues
 import com.appwork.utils.UiUtils

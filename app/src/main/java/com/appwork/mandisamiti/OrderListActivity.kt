@@ -15,7 +15,7 @@ import com.appwork.adapter.OrderAdapter
 import com.appwork.adapter.OrderAdapter.OrderListener
 import com.appwork.database.MandiManagement
 import com.appwork.databaseUtils.EntryContract.EntryColumns
-import com.appwork.model.EntryModel
+import com.appwork.data.entities.EntryModel
 import com.appwork.utils.AppPreferences
 import com.appwork.utils.RecyclerViewUtils
 import com.appwork.utils.StringValues

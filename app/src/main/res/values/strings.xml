@@ -84,4 +84,10 @@
     <string name="str_u_give">You will give</string>
     <string name="str_u_get">You will give</string>
     <string name="call">Call</string>
+    <string name="add_user">Add User</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_number">Enter number</string>
+    <string name="enter_address">Enter address</string>
+    <string name="add_msg">Added Successfully!!</string>
+    <string name="msg_something_went_wrong">Something went wrong!!</string>
 </resources>

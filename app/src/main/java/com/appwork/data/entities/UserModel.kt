@@ -9,8 +9,6 @@ import java.util.*
  * Created by Vivek Kumar belongs to APP WORK  on 04-12-2020.
  */
 
-const val CURRENT_USER_ID = 0
-
 @Entity(tableName = "user_table")
 data class UserModel(
         val userName: String? = null,

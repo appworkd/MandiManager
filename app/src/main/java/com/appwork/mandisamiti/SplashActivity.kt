@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import com.appwork.data.DataPref
 import com.appwork.ui.auth.RegisterScreenActivity
+import com.appwork.ui.client.ClientListActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -33,7 +34,7 @@ class SplashActivity : AppCompatActivity(), KodeinAware {
                     if (it.isNullOrEmpty()) {
                         startActivity(Intent(this@SplashActivity, RegisterScreenActivity::class.java))
                     } else {
-                        startActivity(Intent(this@SplashActivity, UserListActivity::class.java))
+                        startActivity(Intent(this@SplashActivity, ClientListActivity::class.java))
                     }
                     finish()
                 })

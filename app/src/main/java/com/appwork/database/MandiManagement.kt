@@ -9,8 +9,8 @@ import com.appwork.databaseUtils.ClientContract.ClientValues
 import com.appwork.databaseUtils.EntryContract.EntryColumns
 import com.appwork.databaseUtils.TransactionContract.TransactionColumns
 import com.appwork.databaseUtils.UserContract.UserEntry
-import com.appwork.model.ClientModel
-import com.appwork.model.EntryModel
+import com.appwork.data.entities.ClientModel
+import com.appwork.data.entities.EntryModel
 import com.appwork.model.TransactionModel
 import com.appwork.model.UserModel
 import java.util.*
@@ -306,7 +306,7 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
         return database!!.insert(ClientValues.TABLE_CLIENT, null, values)
     }
 
-    fun getClients(parentId: Long): List<ClientModel> {
+  /*  fun getClients(parentId: Long): List<ClientModel> {
         database = readableDatabase
         val clientList: MutableList<ClientModel> = ArrayList()
         database = readableDatabase
@@ -325,7 +325,7 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
         }
         cursor.close()
         return clientList
-    }
+    }*/
 
     fun getClient(clientId: Long): ClientModel {
         val model = ClientModel()
