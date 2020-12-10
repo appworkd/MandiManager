@@ -3,7 +3,6 @@ package com.appwork.ui.client
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.appwork.data.entities.ClientModel
 import com.appwork.mandisamiti.R
 import com.appwork.ui.addclient.IAddClientManager
@@ -67,6 +66,6 @@ class ClientListVM(private val repo: ClientRepo, application: Application) : And
     }
 
     fun performImageOperation(v:View){
-
+        addClientListener.capturePhoto()
     }
 }

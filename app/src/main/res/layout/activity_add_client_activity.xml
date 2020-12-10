@@ -14,6 +14,7 @@
         android:id="@+id/client_parent">
 
         <com.appwork.utils.CircleImageView
+            app:image="@{}"
             android:id="@+id/iv_client"
             android:layout_width="80dp"
             android:layout_height="80dp"

@@ -10,4 +10,6 @@ interface IAddClientManager {
     fun onSuccess(client: ClientModel)
 
     fun moveToAddClient()
+
+    fun capturePhoto()
 }

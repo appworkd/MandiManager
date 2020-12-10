@@ -13,7 +13,7 @@ import com.appwork.utils.DateConverters
  */
 @Database(entities = [UserModel::class,
     ClientModel::class],
-        version = 1)
+        version = 1,exportSchema = false)
 @TypeConverters(DateConverters::class)
 abstract class AppRoomDb : RoomDatabase() {
 

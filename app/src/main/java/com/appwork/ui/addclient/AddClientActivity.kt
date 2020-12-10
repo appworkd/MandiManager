@@ -2,17 +2,25 @@ package com.appwork.ui.addclient
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.appwork.data.entities.ClientModel
@@ -23,6 +31,7 @@ import com.appwork.mandisamiti.databinding.ActivityAddClientActivityBinding
 import com.appwork.ui.client.ClientListVM
 import com.appwork.ui.client.ClientVMFactory
 import com.appwork.utils.*
+import com.appwork.utils.StringValues.FILE_AUTHORITY
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_add_client_activity.*
@@ -39,7 +48,6 @@ class AddClientActivity : AppCompatActivity(),
     override val kodein by kodein()
     private val factory: ClientVMFactory by instance()
     private var imgClient: CircleImageView? = null
-    private var parentClient: ConstraintLayout? = null
 
     //Classes
     private var currentPhotoPath = ""
@@ -68,14 +76,11 @@ class AddClientActivity : AppCompatActivity(),
             } else {
                 UiUtils.createSnackBar(this, parentClient, "Field cn't be empty")
             }
-        }
-        if (v === imgClient) {
-            checkSelfPermission()
         }*/
     }
 
     private fun checkSelfPermission() {
-        /* if (Build.VERSION.SDK_INT >= 23) {
+         if (Build.VERSION.SDK_INT >= 23) {
              //Step 2 check for self permission
              if (checkAndRequestPermission()) {
                  //Permission do things
@@ -83,24 +88,23 @@ class AddClientActivity : AppCompatActivity(),
              }
          } else {
              dispatchTakePictureIntent()
-         }*/
+         }
     }
 
     private fun dispatchTakePictureIntent() {
-        /* val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
          // Ensure that there's a camera activity to handle the intent
          if (takePictureIntent.resolveActivity(packageManager) != null) {
-             val photoFile: File?
-             photoFile = createImageFile()
+             val photoFile: File? = createImageFile()
              // Continue only if the File was successfully created
              if (photoFile != null) {
                  val photoURI = FileProvider.getUriForFile(this,
-                         StringValues.FILE_AUTHORITY,
+                         FILE_AUTHORITY,
                          photoFile)
                  takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                  startActivityForResult(takePictureIntent, REQUEST_CAMERA_PERMISSION_CODE)
              }
-         }*/
+         }
     }
 
     private fun createImageFile(): File? {
@@ -131,13 +135,13 @@ class AddClientActivity : AppCompatActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        /*    if (requestCode == REQUEST_CAMERA_PERMISSION_CODE && resultCode == RESULT_OK) {
-                if (!currentPhotoPath.isEmpty()) {
+            if (requestCode == REQUEST_CAMERA_PERMISSION_CODE && resultCode == RESULT_OK) {
+                if (currentPhotoPath.isNotEmpty()) {
                     val bitmap = BitmapFactory.decodeFile(currentPhotoPath)
                     val rotate = ImageUtils.getCorrectImageAngle(currentPhotoPath, bitmap)
-                    imgClient!!.setImageBitmap(rotate!!)
+                    iv_client!!.setImageBitmap(rotate!!)
                     //update image in db
-                    if (clientId != -1L) {
+                    /*if (clientId != -1L) {
                         val cv = ContentValues()
                         cv.put(ClientValues.CLIENT_IMAGE, currentPhotoPath)
                         val id = database!!.updateClientImage(clientId, cv)
@@ -146,15 +150,15 @@ class AddClientActivity : AppCompatActivity(),
                         } else {
                             UiUtils.createSnackBar(this, parentClient, "Something went wrong")
                         }
-                    }
+                    }*/
                 }
             } else {
-                UiUtils.createSnackBar(this, parentClient, "Something went wrong")
-            }*/
+                UiUtils.createSnackBar(this, client_parent, "Something went wrong")
+            }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        /* if (requestCode == REQUEST_PERMISSION_CODE) {
+         if (requestCode == REQUEST_PERMISSION_CODE) {
              val grantResultMap: MutableMap<String, Int> = HashMap()
              var deniCount = 0
              for (i in grantResults.indices) {
@@ -169,48 +173,50 @@ class AddClientActivity : AppCompatActivity(),
              } else {
                  for ((currentPerm) in grantResultMap) {
                      if (ActivityCompat.shouldShowRequestPermissionRationale(this, currentPerm)) {
-                       *//*  if (dialog == null && !this.isFinishing) {
-                            dialog = DialogUtils.showDialogBox(this,
-                                    "This app needs permission for work without problems",
-                                    "Yes, Grant Permissions",
-                                    { dialogInterface: DialogInterface, i: Int ->
-                                        dialogInterface.dismiss()
-                                        checkAndRequestPermission()
-                                    },
-                                    "No, Exit app",
-                                    { dialogInterface: DialogInterface, i: Int ->
-                                        dialogInterface.dismiss()
-                                        finish()
-                                    },
-                                    false)
-                        }*//*
+                         if (dialog == null && !this.isFinishing) {
+                           dialog=  this.createDialog(getString(R.string.app_name),
+                                     "This app needs permission for work without problems",
+                                     "Yes, Grant Permissions",
+                                     "No, Exit app",
+                                     false,
+                                     DialogInterface.OnClickListener { dialog, _ ->
+                                         dialog.dismiss()
+                                         checkAndRequestPermission()
+                                     },
+                                     DialogInterface.OnClickListener { dialog, _ ->
+                                         dialog.dismiss()
+                                         finish()
+                                     }
+                             )
+                        }
                     } else {
                         //Denied with "never ask again"
-                        *//*if (dialog == null && !this.isFinishing) {
-                            DialogUtils.showDialogBox(this,
+                        if (dialog == null && !this.isFinishing) {
+                            dialog=  this.createDialog(getString(R.string.app_name),
                                     "You have denied some permission. Allow all permissions at [Settings] > [Permissions]",
                                     "Go to Settings",
-                                    { dialogInterface: DialogInterface, i: Int ->
-                                        dialogInterface.dismiss()
+                                    "No, Exit app",
+                                    false,
+                                    DialogInterface.OnClickListener { dialog, _ ->
+                                        dialog.dismiss()
                                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                                                 Uri.fromParts("package", packageName, null))
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                         startActivity(intent)
                                     },
-                                    "No, Exit",
-                                    { dialogInterface: DialogInterface, i: Int ->
-                                        dialogInterface.dismiss()
+                                    DialogInterface.OnClickListener { dialog, _ ->
+                                        dialog.dismiss()
                                         finish()
-                                    },
-                                    false)
+                                    }
+                            )
                             break
-                        }*//*
+                        }
                     }
                 }
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }*/
+        }
     }
 
     companion object {
@@ -248,5 +254,13 @@ class AddClientActivity : AppCompatActivity(),
     override fun moveToAddClient() {
     }
 
+    override fun capturePhoto() {
+        checkSelfPermission()
+    }
 
+    fun an(){
+        MaterialAlertDialogBuilder(this)
+                .setPositiveButton("OK",
+                DialogInterface.OnClickListener { dialog, which ->  })
+    }
 }

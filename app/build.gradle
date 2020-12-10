@@ -31,8 +31,13 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-    dataBinding {
+    /*dataBinding {
         enabled = true
+    }*/
+    buildFeatures {
+        dataBinding true
+        // for view binding:
+        // viewBinding true
     }
 }
 
@@ -77,6 +82,7 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0-alpha05"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
     //Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
