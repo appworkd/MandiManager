@@ -57,35 +57,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:hint="@string/txt_name"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:maxLines="1"
                     android:text="@={registerVM.name}" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:visibility="gone"
-                android:id="@+id/til_email_register"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:padding="10dp"
-                app:boxCornerRadiusTopEnd="8dp"
-                app:boxCornerRadiusTopStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_name_register">
-
-                <EditText
-                    android:id="@+id/edtEmailRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:hint="@string/txt_email"
-                    android:inputType="textEmailAddress"
-                    android:text="@={registerVM.email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,14 +75,14 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_email_register">
+                app:layout_constraintTop_toBottomOf="@+id/til_name_register">
 
                 <EditText
                     android:id="@+id/edtPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:digits="0123456789"
+                    android:digits="0123456789+"
                     android:hint="@string/txt_phone_number"
                     android:inputType="phone"
                     android:text="@={registerVM.phoneNumber}" />

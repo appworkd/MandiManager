@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -17,7 +18,7 @@ fun View.showSnackBar(msg: String, length: Int = Snackbar.LENGTH_LONG) {
     Snackbar.make(this, msg, length).show()
 }
 
-fun View.visible() {
+fun View.doVisibilityOperation() {
     if (this.visibility == View.GONE || this.visibility == View.INVISIBLE) {
         this.visibility = View.VISIBLE
     } else {
@@ -45,12 +46,12 @@ fun View.showKeyboard() {
 }
 
 fun Context.createDialog(msg: String,
-                                            title: String,
-                                            ok: String,
-                                            cancel: String,
-                                            cancelable: Boolean,
-                                            positiveCLick: DialogInterface.OnClickListener,
-                                            negativeCLick: DialogInterface.OnClickListener): MaterialAlertDialogBuilder {
+                         title: String,
+                         ok: String,
+                         cancel: String,
+                         cancelable: Boolean,
+                         positiveCLick: DialogInterface.OnClickListener,
+                         negativeCLick: DialogInterface.OnClickListener): MaterialAlertDialogBuilder {
 
     return MaterialAlertDialogBuilder(this)
             .setTitle(title)
@@ -59,3 +60,9 @@ fun Context.createDialog(msg: String,
             .setPositiveButton(ok, positiveCLick)
             .setNegativeButton(cancel, negativeCLick)
 }
+
+fun EditText.disableOperation() {
+    this.isFocusable = false
+    this.isEnabled = false
+}
+

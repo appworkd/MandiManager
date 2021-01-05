@@ -1,4 +1,4 @@
-package com.appwork.ui.addclient
+package com.appwork.ui.client
 
 import com.appwork.data.entities.ClientModel
 

@@ -12,4 +12,6 @@ class UserRepository(
     suspend fun insertUser(user: UserModel) = db.getUserDao().insertUser(user)
 
     fun getUsers() = db.getUserDao().getUserData()
+
+    suspend fun getUserData(number: String) = db.getUserDao().isUserExist(number)
 }

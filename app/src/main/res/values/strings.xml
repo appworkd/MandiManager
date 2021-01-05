@@ -90,4 +90,17 @@
     <string name="enter_address">Enter address</string>
     <string name="add_msg">Added Successfully!!</string>
     <string name="msg_something_went_wrong">Something went wrong!!</string>
+    <string name="crop_name">Crop Name</string>
+    <string name="done">Done</string>
+    <string name="lCharge">L.Charge </string>
+    <string name="more_field">more field</string>
+    <string name="final_amount"> Final Amount</string>
+    <string name="total_labour_charge">Total Labour Charge</string>
+    <string name="extra_details">Extra Details</string>
+    <string name="fare">Fare</string>
+    <string name="prev_amount">Previous Amount</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="paid">Paid</string>
+    <string name="entry">Entry</string>
+    <string name="no_description">No Description</string>
 </resources>

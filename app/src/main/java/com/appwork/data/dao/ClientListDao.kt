@@ -16,6 +16,9 @@ interface ClientListDao {
     @Query("Select * from client_table")
     fun getAllClients(): LiveData<List<ClientModel>>
 
-    @Query("UPDATE client_table SET clientImg = :clientImage WHERE clientId = :clientId")
-    suspend fun updateClientImage(clientId: Int, clientImage: String): Long
+    @Query("SELECT * FROM CLIENT_TABLE WHERE parentId = :parentId")
+    fun getParentClintList(parentId: Long): LiveData<List<ClientModel>>
+
+    @Query("SELECT * FROM CLIENT_TABLE WHERE clientNumber LIKE :phoneNumber AND parentId LIKE :parentId")
+  suspend  fun getClient(phoneNumber: String, parentId: Long): ClientModel
 }

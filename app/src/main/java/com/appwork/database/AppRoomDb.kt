@@ -3,22 +3,26 @@ package com.appwork.database
 import android.content.Context
 import androidx.room.*
 import com.appwork.data.dao.ClientListDao
+import com.appwork.data.dao.OrderDao
 import com.appwork.data.dao.UserDao
 import com.appwork.data.entities.UserModel
 import com.appwork.data.entities.ClientModel
+import com.appwork.data.entities.OrderModel
 import com.appwork.utils.DateConverters
 
 /**
  * Created by Vivek Kumar belongs to APP WORK  on 04-12-2020.
  */
 @Database(entities = [UserModel::class,
-    ClientModel::class],
-        version = 1,exportSchema = false)
+    ClientModel::class,
+    OrderModel::class],
+        version = 1, exportSchema = false)
 @TypeConverters(DateConverters::class)
 abstract class AppRoomDb : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
     abstract fun getClientListDao(): ClientListDao
+    abstract fun getOrderDao(): OrderDao
 
     companion object {
         private const val DB_NAME = "MyAppDb"

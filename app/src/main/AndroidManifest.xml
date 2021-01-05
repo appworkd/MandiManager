@@ -21,29 +21,28 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ImagePreviewActivity"
             android:label="Preview"
-            android:parentActivityName=".OrderListActivity"
+            android:parentActivityName="com.appwork.ui.orders.OrderListActivity"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name="com.appwork.ui.addclient.AddClientActivity"
+            android:name="com.appwork.ui.client.AddClientActivity"
             android:label="Add User"
             android:parentActivityName="com.appwork.ui.client.ClientListActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".OrderListActivity"
+            android:name="com.appwork.ui.orders.OrderListActivity"
             android:label="Order List"
-            android:parentActivityName=".CalculateActivity"
+            android:parentActivityName="com.appwork.ui.orders.OrderActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".BillDetails"
             android:label="Entry Detail"
-            android:parentActivityName=".CalculateActivity"
+            android:parentActivityName="com.appwork.ui.orders.OrderActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".CalculateActivity"
+            android:name="com.appwork.ui.orders.OrderActivity"
             android:label="Entry"
             android:parentActivityName="com.appwork.ui.client.ClientListActivity"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".AddCommodityActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EntriesActivity"
             android:label="@string/entries"

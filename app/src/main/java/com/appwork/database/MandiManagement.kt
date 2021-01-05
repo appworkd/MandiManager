@@ -10,7 +10,7 @@ import com.appwork.databaseUtils.EntryContract.EntryColumns
 import com.appwork.databaseUtils.TransactionContract.TransactionColumns
 import com.appwork.databaseUtils.UserContract.UserEntry
 import com.appwork.data.entities.ClientModel
-import com.appwork.data.entities.EntryModel
+import com.appwork.data.entities.OrderModel
 import com.appwork.model.TransactionModel
 import com.appwork.model.UserModel
 import java.util.*
@@ -181,11 +181,11 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
         return updateId
     }
 
-    fun getBillDetails(entryId: Long): EntryModel {
+    fun getBillDetails(entryId: Long): OrderModel {
         database = readableDatabase
-        val model = EntryModel()
+        val model = OrderModel()
         val cursor = database!!.rawQuery("SELECT * FROM table_entry WHERE entry_id =$entryId", null)
-        while (cursor.moveToNext()) {
+      /*  while (cursor.moveToNext()) {
             model.entryName = cursor.getString(cursor.getColumnIndex(EntryColumns.ENTRY_NAME))
             model.entryId = entryId
             // model.setEntryName(cursor.getString(cursor.getColumnIndex(ORG_NAME)));
@@ -204,17 +204,17 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
             model.entryDate = cursor.getLong(cursor.getColumnIndex(EntryColumns.ENTRY_ENTRY_DATE))
             model.entryAttachment = cursor.getString(cursor.getColumnIndex(EntryColumns.ENTRY_ENTRY_ATTACHMENT))
             //            model.setGave((cursor.getString(cursor.getColumnIndex(ENTRY_ENTRY_IS_GIVEN))));
-        }
+        }*/
         cursor.close()
         return model
     }
 
-    fun getEntryList(userId: Long): List<EntryModel> {
-        val entryList: MutableList<EntryModel> = ArrayList()
+    fun getEntryList(userId: Long): List<OrderModel> {
+        val orderList: MutableList<OrderModel> = ArrayList()
         database = readableDatabase
         val cursor = database!!.rawQuery("SELECT * FROM table_entry WHERE user_id =$userId", null)
-        while (cursor.moveToNext()) {
-            val model = EntryModel()
+       /* while (cursor.moveToNext()) {
+            val model = OrderModel()
             model.entryName = cursor.getString(cursor.getColumnIndex(EntryColumns.ENTRY_NAME))
             model.entryId = cursor.getInt(cursor.getColumnIndex(EntryColumns.ENTRY_ID)).toLong()
             // model.setEntryName(cursor.getString(cursor.getColumnIndex(ORG_NAME)));
@@ -233,17 +233,17 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
             model.entryDate = cursor.getLong(cursor.getColumnIndex(EntryColumns.ENTRY_ENTRY_DATE))
             model.entryAttachment = cursor.getString(cursor.getColumnIndex(EntryColumns.ENTRY_ENTRY_ATTACHMENT))
             //            model.setGave((cursor.getString(cursor.getColumnIndex(ENTRY_ENTRY_IS_GIVEN))));
-            entryList.add(model)
-        }
+            orderList.add(model)
+        }*/
         cursor.close()
-        return entryList
+        return orderList
     }
 
     // model.setEntryName(cursor.getString(cursor.getColumnIndex(ORG_NAME)));
     //            model.setGave((cursor.getString(cursor.getColumnIndex(ENTRY_ENTRY_IS_GIVEN))));
-    val allEntries: List<EntryModel>
+    val allOrders: List<OrderModel>
         get() {
-            val entryList: MutableList<EntryModel> = ArrayList()
+            val orderList: MutableList<OrderModel> = ArrayList()
             database = readableDatabase
             val cursor = database!!.query(EntryColumns.TABLE_ENTRY,
                     null,
@@ -252,8 +252,8 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
                     null,
                     null,
                     null)
-            while (cursor.moveToNext()) {
-                val model = EntryModel()
+            /*while (cursor.moveToNext()) {
+                val model = OrderModel()
                 model.entryName = cursor.getString(cursor.getColumnIndex(EntryColumns.ENTRY_NAME))
                 model.entryId = cursor.getInt(cursor.getColumnIndex(EntryColumns.ENTRY_ID)).toLong()
                 // model.setEntryName(cursor.getString(cursor.getColumnIndex(ORG_NAME)));
@@ -272,10 +272,10 @@ class MandiManagement(context: Context?) : SQLiteOpenHelper(context, DATABASE_NA
                 model.entryDate = cursor.getLong(cursor.getColumnIndex(EntryColumns.ENTRY_ENTRY_DATE))
                 model.entryAttachment = cursor.getString(cursor.getColumnIndex(EntryColumns.ENTRY_ENTRY_ATTACHMENT))
                 //            model.setGave((cursor.getString(cursor.getColumnIndex(ENTRY_ENTRY_IS_GIVEN))));
-                entryList.add(model)
-            }
+                orderList.add(model)
+            }*/
             cursor.close()
-            return entryList
+            return orderList
         }
 
     fun insertTransaction(contentValues: ContentValues?): Long {

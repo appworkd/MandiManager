@@ -17,4 +17,8 @@ interface UserDao {
 
     @Query("SELECT * FROM user_table ORDER BY id DESC")
     fun getUserData(): LiveData<List<UserModel>>
+
+    @Query("SELECT * FROM USER_TABLE WHERE userNumber=:number")
+    suspend fun isUserExist(number: String): UserModel
+
 }

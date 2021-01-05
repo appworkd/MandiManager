@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.appwork.database.MandiManagement
 import com.appwork.databaseUtils.EntryContract.EntryColumns
 import com.appwork.data.entities.ClientModel
-import com.appwork.data.entities.EntryModel
+import com.appwork.data.entities.OrderModel
 import com.appwork.utils.DateUtils
 import com.appwork.utils.StringValues
 import com.appwork.utils.UiUtils
@@ -102,14 +102,14 @@ class BillDetails : AppCompatActivity(), View.OnClickListener {
         tvAddress!!.setText(clientModel.clientAddress)
     }
 
-    private fun setData(model: EntryModel?) {
+    private fun setData(model: OrderModel?) {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = model!!.entryDate
         val date = DateUtils.getStringCurrentDate(model.entryDate)
         val rupee = resource!!.getString(R.string.txt_indian_rupee)
         tvDate!!.text = date
         tvComName!!.setText(model.entryName)
-        tvEntryId!!.text = String.format(Locale.getDefault(), "%s%s", "", model.entryId)
+       // tvEntryId!!.text = String.format(Locale.getDefault(), "%s%s", "", model.entryId)
         tvPieces!!.setText(model.numberOfPieces)
         tvWtPerP!!.text = String.format(Locale.getDefault(), "%s%s", model.wtPerPiece, "Kgs")
         tvRemainWt!!.text = String.format(Locale.getDefault(), "%s%s", model.remainingWt, "Kgs")

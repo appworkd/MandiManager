@@ -19,6 +19,7 @@ class DataPref(context: Context) {
     companion object {
         const val PREFS = "App_Preferences"
         val KEY_USER_NUMBER = preferencesKey<String>("user_number")
+        val KEY_USER_ID = preferencesKey<Long>("user_id")
     }
 
     init {
@@ -37,5 +38,15 @@ class DataPref(context: Context) {
         }
     }
 
+    val userId: Flow<Long?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_USER_ID]
+        }
+
+    suspend fun saveUserInt(userId: Long) {
+        dataStore.edit { preferences ->
+            preferences[KEY_USER_ID] = userId
+        }
+    }
 
 }

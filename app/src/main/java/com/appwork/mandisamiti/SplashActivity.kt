@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity(), KodeinAware {
             override fun onFinish() {
                 prefs.userContact.asLiveData().observe(this@SplashActivity, Observer {
                     if (it.isNullOrEmpty()) {
-                        startActivity(Intent(this@SplashActivity, RegisterScreenActivity::class.java))
+                        startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                     } else {
                         startActivity(Intent(this@SplashActivity, ClientListActivity::class.java))
                     }

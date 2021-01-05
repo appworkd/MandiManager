@@ -13,4 +13,7 @@ object StringValues {
     const val USER_ID = "userId"
     const val COMING_FROM = "coming_from"
     const val USER_NUM = "userNumber"
+    const val CLIENT_ID= "clientId"
+    const val CLIENT_NUM = "clientNumber"
+    const val CLIENT_NAME = "clientName"
 }

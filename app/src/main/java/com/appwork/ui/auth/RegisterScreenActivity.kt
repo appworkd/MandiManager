@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.appwork.data.entities.UserModel
+import com.appwork.mandisamiti.LoginActivity
 import com.appwork.mandisamiti.R
-import com.appwork.ui.client.ClientListActivity
 import com.appwork.mandisamiti.databinding.ActivityRegisterScreenBinding
+import com.appwork.ui.client.ClientListActivity
+import com.appwork.utils.showToast
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 import org.kodein.di.android.kodein
@@ -31,9 +33,6 @@ class RegisterScreenActivity : AppCompatActivity(), IValidationManager, KodeinAw
     }
 
     override fun onSuccess(user: UserModel) {
-
-        val intent = Intent(this, ClientListActivity::class.java)
-        startActivity(intent)
         finish()
     }
 
@@ -42,6 +41,7 @@ class RegisterScreenActivity : AppCompatActivity(), IValidationManager, KodeinAw
     }
 
     override fun onError(errorMessage: String) {
+
         Log.d("RegisterScreen", "errorMessage $errorMessage")
     }
 

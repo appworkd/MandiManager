@@ -7,24 +7,30 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.appwork.adapter.OrderAdapter.OrderVH
 import com.appwork.mandisamiti.R
-import com.appwork.data.entities.EntryModel
+import com.appwork.data.entities.OrderModel
+import com.appwork.mandisamiti.databinding.ItemViewOderViewBinding
+import com.appwork.mandisamiti.databinding.ItemViewUserBinding
 import com.appwork.utils.DateUtils
 import java.util.*
 
-class OrderAdapter(private val context: Context, private val listener: OrderListener) : RecyclerView.Adapter<OrderVH>(), Filterable {
-    private var entryList: List<EntryModel?>? = null
-    private var filterList: List<EntryModel?>? = null
-    fun setData(entryList: List<EntryModel?>?) {
-        this.entryList = entryList
-        filterList = entryList
+class OrderAdapter(private val context: Context,
+                   private val listener: OrderListener)
+    : RecyclerView.Adapter<OrderVH>(), Filterable {
+    private var orderList: List<OrderModel?>? = null
+    private var filterList: List<OrderModel?>? = null
+    fun setData(orderList: List<OrderModel?>?) {
+        this.orderList = orderList
+        filterList = orderList
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderVH {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_view_oder_view,
+        val view = DataBindingUtil.inflate<ItemViewOderViewBinding>(LayoutInflater.from(parent.context),
+                R.layout.item_view_oder_view,
                 parent,
                 false)
         return OrderVH(view, listener)
@@ -46,13 +52,13 @@ class OrderAdapter(private val context: Context, private val listener: OrderList
         override fun performFiltering(chars: CharSequence): FilterResults {
             val searchValue = chars.toString()
             filterList = if (searchValue.isEmpty()) {
-                entryList
+                orderList
             } else {
-                val tempList: MutableList<EntryModel?> = ArrayList()
-                for (model in entryList!!) {
-                    if (model?.entryId.toString().contains(searchValue)) {
-                        tempList.add(model)
-                    }
+                val tempList: MutableList<OrderModel?> = ArrayList()
+                for (model in orderList!!) {
+//                    if (model?.entryId.toString().contains(searchValue)) {
+//                        tempList.add(model)
+//                    }
                 }
                 tempList
             }
@@ -62,34 +68,28 @@ class OrderAdapter(private val context: Context, private val listener: OrderList
         }
 
         override fun publishResults(chars: CharSequence, results: FilterResults) {
-            filterList = results.values as ArrayList<EntryModel?>
+            filterList = results.values as ArrayList<OrderModel?>
             notifyDataSetChanged()
         }
     }
 
-    inner class OrderVH(itemView: View, listener: OrderListener) : RecyclerView.ViewHolder(itemView) {
-        private val txtAmount: TextView
-        private val txtDate: TextView
-        private val txtOrderId: TextView
-        private val txtName: TextView
+    inner class OrderVH(private val itemViewUserBinding: ItemViewOderViewBinding, listener: OrderListener) : RecyclerView.ViewHolder(itemViewUserBinding.root) {
         fun setData(adapterPosition: Int) {
-            val model = filterList!![adapterPosition]
+
+            itemViewUserBinding.itemOrderViewModel=orderList!![adapterPosition]
+           /* val model = filterList!![adapterPosition]
             txtAmount.text = String.format(Locale.getDefault(), "%s%s", model?.grandTotal, " " + context.resources.getString(R.string.txt_indian_rupee))
             txtDate.text = DateUtils.getStringCurrentDate(model!!.entryDate)
-            txtName.text = model.entryName
-            txtOrderId.text = String.format(Locale.getDefault(), "%s%s", "Order ID : ", model.entryId)
+            txtName.text = model.entryName*/
+            //txtOrderId.text = String.format(Locale.getDefault(), "%s%s", "Order ID : ", model.entryId)
         }
 
         init {
-            txtAmount = itemView.findViewById(R.id.tv_order_amount)
-            txtDate = itemView.findViewById(R.id.tv_order_date)
-            txtOrderId = itemView.findViewById(R.id.tv_order_id)
-            txtName = itemView.findViewById(R.id.tv_order_name)
-            itemView.setOnClickListener { v: View? -> listener.getOrder(entryList!![adapterPosition]) }
+            itemViewUserBinding.root.setOnClickListener { listener.getOrder(orderList!![adapterPosition]) }
         }
     }
 
     interface OrderListener {
-        fun getOrder(model: EntryModel?)
+        fun getOrder(model: OrderModel?)
     }
 }

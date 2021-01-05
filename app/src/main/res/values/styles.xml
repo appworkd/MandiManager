@@ -11,6 +11,7 @@
         <item name="colorError">@android:color/holo_red_light</item>
         <item name="colorOnSecondary">@android:color/white</item>
         <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
 
@@ -32,6 +33,7 @@
     <style name="AppTheme.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
         <item name="windowNoTitle">true</item>
     </style>
 

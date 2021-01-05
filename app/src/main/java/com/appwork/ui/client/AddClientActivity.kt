@@ -1,7 +1,6 @@
-package com.appwork.ui.addclient
+package com.appwork.ui.client
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,31 +10,24 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.Observer
+import com.appwork.data.DataPref
 import com.appwork.data.entities.ClientModel
-import com.appwork.database.MandiManagement
-import com.appwork.databaseUtils.ClientContract.ClientValues
 import com.appwork.mandisamiti.R
 import com.appwork.mandisamiti.databinding.ActivityAddClientActivityBinding
-import com.appwork.ui.client.ClientListVM
-import com.appwork.ui.client.ClientVMFactory
 import com.appwork.utils.*
 import com.appwork.utils.StringValues.FILE_AUTHORITY
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_add_client_activity.*
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -48,7 +40,7 @@ class AddClientActivity : AppCompatActivity(),
     override val kodein by kodein()
     private val factory: ClientVMFactory by instance()
     private var imgClient: CircleImageView? = null
-
+    private val prefs: DataPref by instance()
     //Classes
     private var currentPhotoPath = ""
     private val appPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -61,6 +53,11 @@ class AddClientActivity : AppCompatActivity(),
         val clientVM = ViewModelProvider(this, factory).get(ClientListVM::class.java)
         clientDataBinding.clientVM = clientVM
         clientVM.addClientListener = this
+        prefs.userId.asLiveData().observe(this,Observer {
+            it?.let {
+                clientVM.parentId =it
+            }
+        })
     }
 
     override fun onClick(v: View) {
@@ -244,6 +241,9 @@ class AddClientActivity : AppCompatActivity(),
                     this.isErrorEnabled = true
                 }
             }
+            6->{
+                showToast("Same Number exist")
+            }
         }
     }
 
@@ -256,11 +256,5 @@ class AddClientActivity : AppCompatActivity(),
 
     override fun capturePhoto() {
         checkSelfPermission()
-    }
-
-    fun an(){
-        MaterialAlertDialogBuilder(this)
-                .setPositiveButton("OK",
-                DialogInterface.OnClickListener { dialog, which ->  })
     }
 }

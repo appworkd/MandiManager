@@ -10,5 +10,9 @@ class ClientRepo(private val db: AppRoomDb) {
 
     suspend fun insertClient(client: ClientModel) = db.getClientListDao().insertUpdateClient(client)
 
-     fun getAllClients() = db.getClientListDao().getAllClients()
+    fun getAllClients() = db.getClientListDao().getAllClients()
+
+    fun getClientForParentId(parentId: Long) = db.getClientListDao().getParentClintList(parentId)
+
+   suspend fun checkClientStatus(phoneNumber: String, parentId: Long) = db.getClientListDao().getClient(phoneNumber,parentId)
 }
