@@ -12,6 +12,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
 
@@ -215,5 +216,17 @@ object ImageUtils {
             Log.d("ImageUtils", "Exception : " + e.message)
         }
         return image
+    }
+
+    fun getFileWithContext(context:Context,fileName:String):File{
+        val file :File?=null
+        return try {
+            val storage = context.getExternalFilesDir(fileName)
+            val timeStamp = DateFormat.getTimeInstance().format(Date())
+            File.createTempFile(fileName,timeStamp,storage)
+        }catch (e:Exception){
+            e.printStackTrace()
+            file!!
+        }
     }
 }

@@ -37,25 +37,28 @@ import java.util.*
 class AddClientActivity : AppCompatActivity(),
         View.OnClickListener, KodeinAware,
         IAddClientManager {
+    private var photoFile: File? = null
     override val kodein by kodein()
     private val factory: ClientVMFactory by instance()
     private var imgClient: CircleImageView? = null
     private val prefs: DataPref by instance()
+
     //Classes
     private var currentPhotoPath = ""
     private val appPermissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var clientId: Long = -1
     private var dialog: MaterialAlertDialogBuilder? = null
+    private var clientVM: ClientListVM? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val clientDataBinding: ActivityAddClientActivityBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_add_client_activity)
-        val clientVM = ViewModelProvider(this, factory).get(ClientListVM::class.java)
+        clientVM = ViewModelProvider(this, factory).get(ClientListVM::class.java)
         clientDataBinding.clientVM = clientVM
-        clientVM.addClientListener = this
-        prefs.userId.asLiveData().observe(this,Observer {
+        clientVM!!.addClientListener = this
+        prefs.userId.asLiveData().observe(this, Observer {
             it?.let {
-                clientVM.parentId =it
+                clientVM!!.parentId = it
             }
         })
     }
@@ -77,31 +80,32 @@ class AddClientActivity : AppCompatActivity(),
     }
 
     private fun checkSelfPermission() {
-         if (Build.VERSION.SDK_INT >= 23) {
-             //Step 2 check for self permission
-             if (checkAndRequestPermission()) {
-                 //Permission do things
-                 dispatchTakePictureIntent()
-             }
-         } else {
-             dispatchTakePictureIntent()
-         }
+        if (Build.VERSION.SDK_INT >= 23) {
+            //Step 2 check for self permission
+            if (checkAndRequestPermission()) {
+                //Permission do things
+                dispatchTakePictureIntent()
+            }
+        } else {
+            dispatchTakePictureIntent()
+        }
     }
 
     private fun dispatchTakePictureIntent() {
-         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-         // Ensure that there's a camera activity to handle the intent
-         if (takePictureIntent.resolveActivity(packageManager) != null) {
-             val photoFile: File? = createImageFile()
-             // Continue only if the File was successfully created
-             if (photoFile != null) {
-                 val photoURI = FileProvider.getUriForFile(this,
-                         FILE_AUTHORITY,
-                         photoFile)
-                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                 startActivityForResult(takePictureIntent, REQUEST_CAMERA_PERMISSION_CODE)
-             }
-         }
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            photoFile = createImageFile()
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                val photoURI = FileProvider.getUriForFile(this,
+                        FILE_AUTHORITY,
+                        photoFile!!)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(takePictureIntent, REQUEST_CAMERA_PERMISSION_CODE)
+            }
+
+        }
     }
 
     private fun createImageFile(): File? {
@@ -113,6 +117,7 @@ class AddClientActivity : AppCompatActivity(),
         }
         return image
     }
+
 
     private fun checkAndRequestPermission(): Boolean {
         val neededPermissions: MutableList<String> = ArrayList()
@@ -132,64 +137,58 @@ class AddClientActivity : AppCompatActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == REQUEST_CAMERA_PERMISSION_CODE && resultCode == RESULT_OK) {
-                if (currentPhotoPath.isNotEmpty()) {
-                    val bitmap = BitmapFactory.decodeFile(currentPhotoPath)
-                    val rotate = ImageUtils.getCorrectImageAngle(currentPhotoPath, bitmap)
-                    iv_client!!.setImageBitmap(rotate!!)
-                    //update image in db
-                    /*if (clientId != -1L) {
-                        val cv = ContentValues()
-                        cv.put(ClientValues.CLIENT_IMAGE, currentPhotoPath)
-                        val id = database!!.updateClientImage(clientId, cv)
-                        if (id != -1L) {
-                            UiUtils.createSnackBar(this, parentClient, "Added")
-                        } else {
-                            UiUtils.createSnackBar(this, parentClient, "Something went wrong")
-                        }
-                    }*/
-                }
-            } else {
-                UiUtils.createSnackBar(this, client_parent, "Something went wrong")
+        if (requestCode == REQUEST_CAMERA_PERMISSION_CODE && resultCode == RESULT_OK) {
+            if (photoFile != null) {
+                val temp = currentPhotoPath
+                /*val bitmap = BitmapFactory.decodeFile(temp)
+                val rotate = ImageUtils.getCorrectImageAngle(temp, bitmap)
+                iv_client!!.setImageBitmap(rotate!!)*/
+//                    clientVM!!.clientImage.set(temp)
+                clientVM!!.choosedImage.value = temp
+                //clientVM!!.choose("")
+                //clientVM!!.choose(currentPhotoPath)
             }
+        } else {
+            UiUtils.createSnackBar(this, client_parent, "Something went wrong")
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-         if (requestCode == REQUEST_PERMISSION_CODE) {
-             val grantResultMap: MutableMap<String, Int> = HashMap()
-             var deniCount = 0
-             for (i in grantResults.indices) {
-                 if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                     grantResultMap[permissions[i]] = grantResults[i]
-                     deniCount++
-                 }
-             }
-             if (deniCount == 0) {
-                 Toast.makeText(this, "All permissions granted", Toast.LENGTH_SHORT).show()
-                 dispatchTakePictureIntent()
-             } else {
-                 for ((currentPerm) in grantResultMap) {
-                     if (ActivityCompat.shouldShowRequestPermissionRationale(this, currentPerm)) {
-                         if (dialog == null && !this.isFinishing) {
-                           dialog=  this.createDialog(getString(R.string.app_name),
-                                     "This app needs permission for work without problems",
-                                     "Yes, Grant Permissions",
-                                     "No, Exit app",
-                                     false,
-                                     DialogInterface.OnClickListener { dialog, _ ->
-                                         dialog.dismiss()
-                                         checkAndRequestPermission()
-                                     },
-                                     DialogInterface.OnClickListener { dialog, _ ->
-                                         dialog.dismiss()
-                                         finish()
-                                     }
-                             )
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            val grantResultMap: MutableMap<String, Int> = HashMap()
+            var deniCount = 0
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    grantResultMap[permissions[i]] = grantResults[i]
+                    deniCount++
+                }
+            }
+            if (deniCount == 0) {
+                Toast.makeText(this, "All permissions granted", Toast.LENGTH_SHORT).show()
+                dispatchTakePictureIntent()
+            } else {
+                for ((currentPerm) in grantResultMap) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, currentPerm)) {
+                        if (dialog == null && !this.isFinishing) {
+                            dialog = this.createDialog(getString(R.string.app_name),
+                                    "This app needs permission for work without problems",
+                                    "Yes, Grant Permissions",
+                                    "No, Exit app",
+                                    false,
+                                    DialogInterface.OnClickListener { dialog, _ ->
+                                        dialog.dismiss()
+                                        checkAndRequestPermission()
+                                    },
+                                    DialogInterface.OnClickListener { dialog, _ ->
+                                        dialog.dismiss()
+                                        finish()
+                                    }
+                            )
                         }
                     } else {
                         //Denied with "never ask again"
                         if (dialog == null && !this.isFinishing) {
-                            dialog=  this.createDialog(getString(R.string.app_name),
+                            dialog = this.createDialog(getString(R.string.app_name),
                                     "You have denied some permission. Allow all permissions at [Settings] > [Permissions]",
                                     "Go to Settings",
                                     "No, Exit app",
@@ -241,7 +240,7 @@ class AddClientActivity : AppCompatActivity(),
                     this.isErrorEnabled = true
                 }
             }
-            6->{
+            6 -> {
                 showToast("Same Number exist")
             }
         }
